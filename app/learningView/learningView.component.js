@@ -32,6 +32,7 @@
                         english: "this (thing) is pleasing to me."
                     }
                 ];
+                $scope.language = 'Latin';
 
                 $scope.stats = {
                     progress: [],
@@ -56,7 +57,7 @@
                             $scope.stats.progress[$scope.currentCard.id] = 1;
                         }
                         var delay = 0;
-                        if ($scope.guess != $scope.currentCard.answer) {
+                        if ($scope.guess !== $scope.currentCard.answer) {
                             $scope.guess = '';
                             $scope.answer = $scope.currentCard.answer;
                             delay = 3000;
