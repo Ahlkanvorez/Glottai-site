@@ -5,8 +5,7 @@
         templateUrl: '/learningView/learningView.template.html',
         controller: ['$sanitize', '$scope', '$timeout',
             function ($sanitize, $scope, $timeout) {
-                console.log('Learning view loaded.');
-                const cards = [
+                var cards = [
                     {
                         id: 0,
                         sentenceBefore: "",
@@ -32,9 +31,11 @@
                         english: "this (thing) is pleasing to me."
                     }
                 ];
-                $scope.language = 'Latin';
 
+                // Record statistics on user learning progress
+                // TODO: Pull this from the server, and send updates to the server.
                 $scope.stats = {
+                    language: 'Latin',
                     progress: [],
                     correct: [],
                     incorrect: []
@@ -43,45 +44,65 @@
                 $scope.guess = '';
                 $scope.answer = '';
 
-                $scope.index = 0;
+                var index = 0;
+                $scope.currentCard = cards[index];
 
-                $scope.currentCard = cards[$scope.index];
+                // Returns an object indicating how correct the answer is, with two properties:
+                // ['correct'] is true if the given answer is when not considering case, and
+                // ['correct_case'] is true if the given answer is equal when considering case.
+                var checkAnswer = function (guess, answer) {
+                    return {
+                        correct: guess.toUpperCase() === answer.toUpperCase(),
+                        correct_case: guess === answer
+                    };
+                };
+
+                // Sets $scope.answer, which should be bound to the placeholder of the input box, to the correct answer
+                // for the designated timeout (in milliseconds), before resetting it to the empty string.
+                var showAnswer = function (delay, answer) {
+                    $scope.answer = answer;
+                    $timeout(function () {
+                        $scope.answer = '';
+                    }, delay);
+                };
+
+                // Displays the next card from the deck after the given delay.
+                var showNextCard = function (delay) {
+                    $timeout(function () {
+                        $scope.guess = '';
+                        index = (index + 1) % cards.length;
+                        $scope.currentCard = cards[index];
+                    }, delay);
+                };
+
                 $scope.nextCard = function () {
-                    if ($scope.guess.toUpperCase() === $scope.currentCard.answer.toUpperCase()) {
-                        $scope.stats.correct.push({
-                            card: $scope.currentCard
-                        });
-                        if ($scope.stats.progress[$scope.currentCard.id]) {
-                            $scope.stats.progress[$scope.currentCard.id]++;
-                        } else {
-                            $scope.stats.progress[$scope.currentCard.id] = 1;
-                        }
+                    var stats = $scope.stats,
+                        id = $scope.currentCard.id,
+                        status = checkAnswer($scope.guess, $scope.currentCard.answer);
+                    if (status.correct) {
+                        stats.correct.push({ card: $scope.currentCard });
+                        stats.progress[id] = (stats.progress[id] + 1) || 1;
                         var delay = 0;
-                        if ($scope.guess !== $scope.currentCard.answer) {
+                        if (!status.correct_case) {
                             $scope.guess = '';
-                            $scope.answer = $scope.currentCard.answer;
                             delay = 3000;
                         }
-                        $timeout(function () {
-                            $scope.guess = '';
-                            $scope.answer = '';
-                            $scope.index = ($scope.index + 1) % cards.length;
-                            $scope.currentCard = cards[$scope.index];
-                        }, delay);
+                        showAnswer(delay, $scope.currentCard.answer);
+                        showNextCard(delay);
                     } else {
                         $scope.stats.incorrect.push({
                             card: $scope.currentCard,
                             answer: $scope.guess
                         });
                         $scope.guess = '';
-                        $scope.answer = $scope.currentCard.answer;
-                        $timeout(function () {
-                            $scope.answer = '';
-                        }, 3000);
+                        showAnswer(3000, $scope.currentCard.answer);
                     }
-                    console.log($scope.stats);
-                    console.log($scope.currentCard);
                 };
+
+                // Indicates whether the current card has ever been successfully attempted.
+                $scope.isNewCard = function () {
+                    return !$scope.stats.progress[$scope.currentCard.id];
+                }
             }
         ]
     });

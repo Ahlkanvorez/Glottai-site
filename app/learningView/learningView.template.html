@@ -1,6 +1,7 @@
-<h3>{{ language }}</h3>
+<h3>{{ stats.language }}</h3>
 
 <div>
+    <span ng-if="isNewCard()">New Word</span>
     <form name="quizForm">
         <span ng-bind-html="currentCard.sentenceBefore"></span>
         <input name="guess" type="text" ng-model="guess" placeholder="{{ answer }}" autofocus required />
