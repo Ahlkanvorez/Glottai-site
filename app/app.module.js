@@ -5,6 +5,7 @@
     angular.module('glottaiApp', [
         'ngRoute',
         'learning',
+        'grammar',
         'about'
     ]);
 })();

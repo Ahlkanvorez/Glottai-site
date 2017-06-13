@@ -11,6 +11,8 @@
             $routeProvider
                 .when('/learn', {
                     template: '<learning></learning>'
+                }).when('/grammar', {
+                    template: '<grammar></grammar>'
                 }).when('/', {
                     template: '<about></about>'
                 }).otherwise({
