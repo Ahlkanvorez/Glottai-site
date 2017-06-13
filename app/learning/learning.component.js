@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('learningView').component('learningView', {
-        templateUrl: '/learningView/learningView.template.html',
+    angular.module('learning').component('learning', {
+        templateUrl: '/learning/learning.template.html',
         controller: ['$sanitize', '$scope', '$timeout',
             function ($sanitize, $scope, $timeout) {
                 // TODO: Ensure this list is sorted by ID.

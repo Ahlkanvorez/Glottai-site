@@ -1,10 +1,10 @@
 'use strict';
 
-describe('glottaiApp.learningView module', function() {
+describe('glottaiApp.learning module', function() {
 
-  beforeEach(module('glottaiApp.learningView'));
+  beforeEach(module('glottaiApp.learning'));
 
-  describe('learningView controller', function(){
+  describe('learning controller', function(){
 
     it('should ....', inject(function($controller) {
       //spec body

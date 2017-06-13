@@ -7,20 +7,20 @@
 describe('Glottai App', function() {
 
 
-  it('should automatically redirect to /learningView when location hash/fragment is empty', function() {
+  it('should automatically redirect to /learning when location hash/fragment is empty', function() {
     browser.get('index.html');
-    expect(browser.getLocationAbsUrl()).toMatch("/learningView");
+    expect(browser.getLocationAbsUrl()).toMatch("/learning");
   });
 
 
   describe('view1', function() {
 
     beforeEach(function() {
-      browser.get('index.html/learningView');
+      browser.get('index.html/learning');
     });
 
 
-    it('should render learningView when user navigates to /learningView', function() {
+    it('should render learning when user navigates to /learning', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
         toMatch(/partial for view 1/);
     });

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('learningView', [
+    angular.module('learning', [
         'ngSanitize'
     ]);
 })();

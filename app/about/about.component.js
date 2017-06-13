@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('aboutView').component('aboutView', {
+    angular.module('about').component('about', {
         templateUrl: '/about/about.template.html',
         controller: [
             function () {

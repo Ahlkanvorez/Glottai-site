@@ -1,5 +1,5 @@
 (function () {
     'use strict';
 
-    angular.module('aboutView', []);
+    angular.module('about', []);
 }());
