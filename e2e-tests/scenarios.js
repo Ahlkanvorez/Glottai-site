@@ -2,6 +2,8 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
+// TODO: Update E2E tests for the new views.
+
 describe('Glottai App', function() {
 
 
