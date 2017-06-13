@@ -1,13 +1,22 @@
 <h3>{{ stats.language }}</h3>
 
-<div>
-    <span ng-if="isNewCard()">New Word</span>
-    <form name="quizForm">
-        <span ng-bind-html="currentCard.sentenceBefore"></span>
-        <input name="guess" type="text" ng-model="guess" placeholder="{{ answer }}" autofocus required />
-        <span ng-bind-html="currentCard.sentenceAfter"></span>
+<div class="col-md-8">
+    <p id="quizNewWord" ng-if="isNewCard()">New Word</p>
+    <form name="quizForm" id="quizForm">
+        <button id="quizNextButton" ng-click="nextCard()">Next</button>
+        <div id="quizText">
+            <span ng-bind-html="currentCard.sentenceBefore"></span>
+            <input name="guess" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
+            <span ng-bind-html="currentCard.sentenceAfter"></span>
+        </div>
+        <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
+        <p ng-bind-html="currentCard.grammar"></p>
     </form>
-    <p ng-bind-html="currentCard.english"></p>
-    <p ng-bind-html="currentCard.grammar"></p>
-    <button ng-click="nextCard()">Next</button>
+</div>
+
+<div class="col-md-4">
+    <h3>Learning Progress</h3>
+    <div ng-repeat="word in learnedWords | orderBy:['-seen', 'progress']">
+        <span>{{ word.form }}: {{ word.progress }}</span>
+    </div>
 </div>

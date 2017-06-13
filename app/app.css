@@ -24,3 +24,33 @@
     padding-right: 0.3em;
 }
 
+#quizForm {
+    border: 2px solid #000000;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#quizText {
+    font-family: "Verdana", "Arial", sans-serif;
+    font-size: 1.2em;
+    color: olive;
+}
+
+#quizTextTranslation {
+    font-family: "Verdana", "Arial", sans-serif;
+    font-size: 1em;
+    font-style: italic;
+    color: olivedrab;
+}
+
+#quizNewWord {
+    font-family: "Verdana", "Arial", sans-serif;
+    font-size: 1.2em;
+    color: tomato;
+}
+
+#quizNextButton {
+    float: right;
+}

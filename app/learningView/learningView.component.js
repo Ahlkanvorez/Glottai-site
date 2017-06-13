@@ -1,10 +1,11 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('learningView').component('learningView', {
         templateUrl: '/learningView/learningView.template.html',
         controller: ['$sanitize', '$scope', '$timeout',
             function ($sanitize, $scope, $timeout) {
+                // TODO: Ensure this list is sorted by ID.
                 var cards = [
                     {
                         id: 0,
@@ -89,6 +90,7 @@
                         }
                         showAnswer(delay, $scope.currentCard.answer);
                         showNextCard(delay);
+                        updateLearnedWords();
                     } else {
                         $scope.stats.incorrect.push({
                             card: $scope.currentCard,
@@ -102,7 +104,24 @@
                 // Indicates whether the current card has ever been successfully attempted.
                 $scope.isNewCard = function () {
                     return !$scope.stats.progress[$scope.currentCard.id];
-                }
+                };
+
+                var updateLearnedWords = function () {
+                    var words = [];
+                    var progress = $scope.stats.progress;
+                    for (var id = 0; id < cards.length; ++id) {
+                        words.push({
+                            form: cards[id].answer,
+                            progress: progress[id] || 0,
+                            seen: (progress[id] || 0) > 0
+                        });
+                    }
+                    $scope.learnedWords = words;
+                };
+
+                // A list of words in the current deck including whether they've been
+                // seen before, and if they have, the degree to which they've been learned.
+                $scope.learnedWords = [];
             }
         ]
     });
