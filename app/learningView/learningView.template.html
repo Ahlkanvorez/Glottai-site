@@ -1,22 +1,42 @@
-<h3>{{ stats.language }}</h3>
-
 <div class="col-md-8">
-    <p id="quizNewWord" ng-if="isNewCard()">New Word</p>
-    <form name="quizForm" id="quizForm">
-        <button id="quizNextButton" ng-click="nextCard()">Next</button>
-        <div id="quizText">
-            <span ng-bind-html="currentCard.sentenceBefore"></span>
-            <input name="guess" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
-            <span ng-bind-html="currentCard.sentenceAfter"></span>
+    <div>
+        <h3 id="quizLanguage">{{ stats.language }}</h3>
+        <p id="quizNewWord" ng-if="isNewCard()">New Word</p>
+    </div>
+
+    <div id="quizForm">
+        <form name="quizForm">
+            <button id="quizNextButton" ng-click="nextCard()">Next</button>
+            <div id="quizText">
+                <span ng-bind-html="currentCard.sentenceBefore"></span>
+                <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
+                <span ng-bind-html="currentCard.sentenceAfter"></span>
+            </div>
+            <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
+            <p ng-bind-html="currentCard.grammar"></p>
+        </form>
+        <div>
+            <button ng-click="seeTranslation()">See Translation</button>
+            <p id="englishTranslationText"></p>
         </div>
-        <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
-        <p ng-bind-html="currentCard.grammar"></p>
-    </form>
+    </div>
 </div>
 
-<div class="col-md-4">
-    <h3>Learning Progress</h3>
-    <div ng-repeat="word in learnedWords | orderBy:['-seen', 'progress']">
-        <span>{{ word.form }}: {{ word.progress }}</span>
-    </div>
+<div class="col-md-4" ng-if="learnedWords.length > 0">
+    <h3>Your Vocabulary</h3>
+    <table id="vocabularyProgressTable">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="word in learnedWords | orderBy:'progress'">
+            <tr ng-if="word.seen">
+                <td>{{ word.form }}</td>
+                <td>{{ word.progress }}</td>
+            </tr>
+        </tbody>
+
+    </table>
 </div>

@@ -1,29 +1,5 @@
 /* app css stylesheet */
 
-.menu {
-    list-style: none;
-    border-bottom: 0.1em solid black;
-    margin-bottom: 2em;
-    padding: 0 0 0.5em;
-}
-
-.menu:before {
-    content: "[";
-}
-
-.menu:after {
-    content: "]";
-}
-
-.menu > li {
-    display: inline;
-}
-
-.menu > li + li:before {
-    content: "|";
-    padding-right: 0.3em;
-}
-
 #quizForm {
     border: 2px solid #000000;
     padding-top: 30px;
@@ -33,9 +9,16 @@
 }
 
 #quizText {
-    font-family: "Verdana", "Arial", sans-serif;
-    font-size: 1.2em;
+    font-family: "Iowan Old Style", "Times New Roman", serif;
+    font-size: 1.7em;
     color: olive;
+}
+
+#quizInput {
+    border: none;
+    outline: none;
+    padding: 10px;
+    background-color: #ffeedd;
 }
 
 #quizTextTranslation {
@@ -49,8 +32,30 @@
     font-family: "Verdana", "Arial", sans-serif;
     font-size: 1.2em;
     color: tomato;
+    display: inline-block;
+}
+
+#quizLanguage {
+    margin-right: 15px;
+    display: inline-block;
 }
 
 #quizNextButton {
     float: right;
+    border: 1px solid lightblue;
+    background-color: #EDEEEE;
+}
+
+#englishTranslationText {
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+#quizNextButton:hover {
+    background-color: #DEEEEE;
+}
+
+#vocabularyProgressTable {
+    width: 300px;
 }

@@ -12,24 +12,27 @@
                         sentenceBefore: "",
                         sentenceAfter: "est?",
                         answer: "Quid",
-                        grammar: "Nom.sg.n.",
-                        english: "What is it?"
+                        grammar: "Nom.sg.n. Interrogative Pronoun",
+                        english: "What",
+                        translation: "What is it?"
                     },
                     {
                         id: 1,
                         sentenceBefore: "",
                         sentenceAfter: "est?",
                         answer: "Quis",
-                        grammar: "Nom.sg.m.",
-                        english: "Who is it?"
+                        grammar: "Nom.sg.m. Interrogative Pronoun",
+                        english: "Who",
+                        translation: "Who is it?"
                     },
                     {
                         id: 2,
                         sentenceBefore: "hoc",
                         sentenceAfter: "placet",
                         answer: "mihi",
-                        grammar: "1st person dat.sg.m. reflexive pronoun",
-                        english: "this (thing) is pleasing to me."
+                        grammar: "1st person dat.sg.m. Reflexive Pronoun",
+                        english: "(to/for) me",
+                        translation: "This (thing) pleases me."
                     }
                 ];
 
@@ -47,6 +50,23 @@
 
                 var index = 0;
                 $scope.currentCard = cards[index];
+
+                // A list of words in the current deck including whether they've been
+                // seen before, and if they have, the degree to which they've been learned.
+                $scope.learnedWords = [];
+
+                var updateLearnedWords = function () {
+                    var words = [];
+                    var progress = $scope.stats.progress;
+                    for (var id = 0; id < cards.length; ++id) {
+                        words.push({
+                            form: cards[id].answer,
+                            progress: progress[id] || 0,
+                            seen: (progress[id] || 0) > 0
+                        });
+                    }
+                    $scope.learnedWords = words;
+                };
 
                 // Returns an object indicating how correct the answer is, with two properties:
                 // ['correct'] is true if the given answer is when not considering case, and
@@ -106,22 +126,14 @@
                     return !$scope.stats.progress[$scope.currentCard.id];
                 };
 
-                var updateLearnedWords = function () {
-                    var words = [];
-                    var progress = $scope.stats.progress;
-                    for (var id = 0; id < cards.length; ++id) {
-                        words.push({
-                            form: cards[id].answer,
-                            progress: progress[id] || 0,
-                            seen: (progress[id] || 0) > 0
-                        });
-                    }
-                    $scope.learnedWords = words;
-                };
-
-                // A list of words in the current deck including whether they've been
-                // seen before, and if they have, the degree to which they've been learned.
-                $scope.learnedWords = [];
+                $scope.seeTranslation = function () {
+                    console.log('Showing translation');
+                    var p = document.getElementById('englishTranslationText');
+                    p.textContent = $scope.currentCard.translation;
+                    $timeout(function () {
+                        p.textContent = '';
+                    }, 3000);
+                }
             }
         ]
     });
