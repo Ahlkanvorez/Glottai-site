@@ -1,10 +1,10 @@
 'use strict';
 
-describe('glottaiApp.view2 module', function() {
+describe('glottaiApp.about module', function() {
 
-  beforeEach(module('glottaiApp.view2'));
+  beforeEach(module('glottaiApp.about'));
 
-  describe('view2 controller', function(){
+  describe('about controller', function(){
 
     it('should ....', inject(function($controller) {
       //spec body

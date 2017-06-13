@@ -11,8 +11,9 @@
             $routeProvider
                 .when('/learn', {
                     template: '<learning-view></learning-view>'
-                })
-                .otherwise({
+                }).when('/', {
+                    template: '<about-view></about-view>'
+                }).otherwise({
                     redirectTo: '/'
                 });
         }]
