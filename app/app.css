@@ -59,3 +59,7 @@
 #vocabularyProgressTable {
     width: 300px;
 }
+
+.grammarTable {
+    display: inline;
+}
