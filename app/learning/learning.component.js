@@ -127,7 +127,6 @@
                 };
 
                 $scope.seeTranslation = function () {
-                    console.log('Showing translation');
                     var p = document.getElementById('englishTranslationText');
                     p.textContent = $scope.currentCard.translation;
                     $timeout(function () {
@@ -137,4 +136,4 @@
             }
         ]
     });
-})();
+}());

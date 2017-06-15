@@ -1,6 +1,3 @@
-/**
- * Created by robertmitchell on 6/8/17.
- */
 (function () {
     'use strict';
 
@@ -20,4 +17,4 @@
                 });
         }]
     );
-})();
+}());
