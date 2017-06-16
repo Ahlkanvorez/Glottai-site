@@ -6,7 +6,7 @@
 
     <div id="quizForm">
         <form name="quizForm">
-            <button id="quizNextButton" ng-click="nextCard()">Next</button>
+            <button type="button" class="btn btn-lg btn-primary" id="quizNextButton" ng-click="nextCard()">Next</button>
             <div id="quizText">
                 <span ng-bind-html="currentCard.sentenceBefore"></span>
                 <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
@@ -16,7 +16,7 @@
             <p ng-bind-html="currentCard.grammar"></p>
         </form>
         <div>
-            <button ng-click="seeTranslation()">See Translation</button>
+            <button type="button" class="btn btn-info" ng-click="seeTranslation()">See Translation</button>
             <p id="englishTranslationText"></p>
         </div>
     </div>

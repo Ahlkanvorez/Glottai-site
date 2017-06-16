@@ -42,18 +42,12 @@
 
 #quizNextButton {
     float: right;
-    border: 1px solid lightblue;
-    background-color: #EDEEEE;
 }
 
 #englishTranslationText {
     display: inline-block;
     margin-left: 10px;
     margin-bottom: 0px;
-}
-
-#quizNextButton:hover {
-    background-color: #DEEEEE;
 }
 
 #vocabularyProgressTable {

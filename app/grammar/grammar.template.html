@@ -23,7 +23,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in table.data">
-                    <td ng-repeat="col in row">{{ col }}</td>
+                    <td>{{ row[0] }}</td>
+                    <td ng-repeat="col in row.slice(1)">
+                        <input class="form-control" type="text" placeholder="{{ col }}" />
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -43,7 +46,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in table.data">
-                    <td ng-repeat="col in row">{{ col }}</td>
+                    <td>{{ row[0] }}</td>
+                    <td ng-repeat="col in row.slice(1)">
+                        <input class="form-control" type="text" placeholder="{{ col }}" />
+                    </td>
                 </tr>
             </tbody>
         </table>
