@@ -1,0 +1,103 @@
+/* app css stylesheet */
+
+$brown: rgba(117, 99, 66, 1);
+$blue: rgba(61, 149, 237, 1);
+$grey: rgba(132, 155, 194, 1);
+$dark-grey: rgba(58, 64, 79, 1);
+$blue-green: rgba(49, 104, 99, 1);
+
+@mixin placeholder($color, $size:"") {
+  &::-webkit-input-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-moz-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &::-moz-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+}
+
+[placeholder] {
+  @include placeholder($dark-grey);
+}
+
+#quizForm {
+  border: 2px solid #000000;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#quizText {
+  font-family: "Iowan Old Style", "Times New Roman", serif;
+  font-size: 1.7em;
+  color: $dark-grey;
+}
+
+#quizInput {
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: $grey;
+}
+
+#quizTextTranslation {
+  font-family: "Verdana", "Arial", sans-serif;
+  font-size: 1em;
+  font-style: italic;
+  color: $blue;
+}
+
+#quizNewWord {
+  font-family: "Verdana", "Arial", sans-serif;
+  font-size: 1.2em;
+  color: $brown;
+  display: inline-block;
+}
+
+#quizLanguage {
+  margin-right: 15px;
+  display: inline-block;
+}
+
+#quizNextButton {
+  color: $dark-grey;
+  background-color: $grey;
+  border-radius: 0px;
+  float: right;
+}
+
+#quizNextButton:hover {
+  background-color: $blue;
+}
+
+#englishTranslationText {
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: 0px;
+}
+
+#vocabularyProgressTable {
+  width: 300px;
+}
+
+.grammarTable {
+  display: inline;
+}
