@@ -12,6 +12,7 @@
             'app/app.config.js',
             'app/learning/learning.module.js',
             'app/learning/learning.component.js',
+            'app/learning/learning.stats.service.js',
             'app/grammar/grammar.module.js',
             'app/grammar/grammar.service.js',
             'app/grammar/grammar.component.js',
