@@ -112,9 +112,10 @@
                 $scope.declensionClasses = {};
                 $scope.conjugationModels = {};
                 $scope.declensionModels = {};
+
                 $scope.check = function check (value) {
-                    const input = $scope.conjugationModels[value];
-                    if (input === value) {
+                    // If the inputted text is correct, update the styles accordingly.
+                    if ($scope.conjugationModels[value] === value) {
                         $scope.conjugationClasses[value] = 'correct';
                     } else {
                         $scope.conjugationClasses[value] = 'incorrect';
