@@ -7,6 +7,6 @@ To enable the startup script, run the following command:
 
 > chmod +x startup.sh
 
-To run, enter the following commands:
+To start the test server, enter the following command:
 
 > ./startup.sh
