@@ -3,6 +3,7 @@ Learning dead languages can be particularly difficult, since, with no one to tal
 
 This is the front-end browser-app, written in AngularJS.
 
-To run, enter the following command:
+To run, enter the following commands:
 
-> npm start
+> chmod +x startup.sh
+> ./startup.shaa
