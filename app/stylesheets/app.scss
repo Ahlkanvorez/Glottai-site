@@ -1,10 +1,19 @@
 /* app css stylesheet */
 
-$brown: rgba(117, 99, 66, 1);
-$blue: rgba(61, 149, 237, 1);
-$grey: rgba(132, 155, 194, 1);
-$dark-grey: rgba(58, 64, 79, 1);
-$blue-green: rgba(49, 104, 99, 1);
+$dark-red: #8A0707;
+$white-smoke: #FBF5f3;
+$pewter-blue: #8DAA9D;
+$wine-dregs: #522B47;
+$smoky-black: #0F0E0E;
+
+html, body {
+  background-color: $white-smoke;
+}
+
+@mixin centered() {
+  display: table;
+  margin: 0 auto;
+}
 
 @mixin placeholder($color, $size:"") {
   &::-webkit-input-placeholder {
@@ -34,11 +43,11 @@ $blue-green: rgba(49, 104, 99, 1);
 }
 
 [placeholder] {
-  @include placeholder($dark-grey);
+  @include placeholder($dark-red);
 }
 
 #quizForm {
-  border: 2px solid #000000;
+  border: 2px solid $smoky-black;
   padding-top: 30px;
   padding-bottom: 30px;
   padding-left: 15px;
@@ -48,27 +57,27 @@ $blue-green: rgba(49, 104, 99, 1);
 #quizText {
   font-family: "Iowan Old Style", "Times New Roman", serif;
   font-size: 1.7em;
-  color: $dark-grey;
+  color: $wine-dregs;
 }
 
 #quizInput {
   border: none;
   outline: none;
   padding: 10px;
-  background-color: $grey;
+  background-color: $pewter-blue;
 }
 
 #quizTextTranslation {
   font-family: "Verdana", "Arial", sans-serif;
   font-size: 1em;
   font-style: italic;
-  color: $blue;
+  color: $pewter-blue;
 }
 
 #quizNewWord {
   font-family: "Verdana", "Arial", sans-serif;
   font-size: 1.2em;
-  color: $brown;
+  color: $dark-red;
   display: inline-block;
 }
 
@@ -78,14 +87,21 @@ $blue-green: rgba(49, 104, 99, 1);
 }
 
 #quizNextButton {
-  color: $dark-grey;
-  background-color: $grey;
+  color: $white-smoke;
+  background-color: $pewter-blue;
+  border: 3px solid $white-smoke;
   border-radius: 0px;
   float: right;
 }
 
 #quizNextButton:hover {
-  background-color: $blue;
+  background-color: $wine-dregs;
+  border: 3px solid $wine-dregs;
+}
+
+#translateButton {
+  @extend #quizNextButton;
+  float: none;
 }
 
 #englishTranslationText {
