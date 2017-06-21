@@ -91,7 +91,6 @@ html, body {
   background-color: $pewter-blue;
   border: 3px solid $white-smoke;
   border-radius: 0px;
-  float: right;
 }
 
 #quizNextButton:hover {
@@ -101,7 +100,6 @@ html, body {
 
 #translateButton {
   @extend #quizNextButton;
-  float: none;
 }
 
 #englishTranslationText {
@@ -116,4 +114,14 @@ html, body {
 
 .grammarTable {
   display: inline;
+}
+
+.correct {
+  background-color: $pewter-blue;
+  color: $smoky-black;
+}
+
+.incorrect {
+  background-color: lightcoral;
+  color: $smoky-black;
 }

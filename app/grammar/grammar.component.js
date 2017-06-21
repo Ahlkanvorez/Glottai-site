@@ -108,6 +108,18 @@
 
                 $scope.conjugations = [ tables.conjugations.first, tables.conjugations.second ];
                 $scope.declensions = [ tables.declensions.first, tables.declensions.second ];
+                $scope.conjugationClasses = {};
+                $scope.declensionClasses = {};
+                $scope.conjugationModels = {};
+                $scope.declensionModels = {};
+                $scope.check = function check (value) {
+                    const input = $scope.conjugationModels[value];
+                    if (input === value) {
+                        $scope.conjugationClasses[value] = 'correct';
+                    } else {
+                        $scope.conjugationClasses[value] = 'incorrect';
+                    }
+                }
             }
         ]
     });

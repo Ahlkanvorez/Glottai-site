@@ -9,9 +9,9 @@
     this would be easy, or fun.
 </p>
 
-<div ng-repeat="conjugation in conjugations" class="col-lg-12">
+<div ng-repeat="conjugation in conjugations" class="row">
     <h4>{{ conjugation.name }} ({{conjugation.theme}})</h4>
-    <div ng-repeat="table in conjugation.tables" class="col-md-3">
+    <div ng-repeat="table in conjugation.tables" class="col-md-4">
         <h5>{{ [table.tense, table.mood, table.voice].join(" ") }}</h5>
         <table class="table">
             <thead class="thead">
@@ -25,7 +25,8 @@
                 <tr ng-repeat="row in table.data">
                     <td>{{ row[0] }}</td>
                     <td ng-repeat="col in row.slice(1)">
-                        <input class="form-control" type="text" placeholder="{{ col }}" />
+                        <input class="form-control {{ conjugationClasses[col] }}" type="text" placeholder="{{ col }}"
+                               ng-model="conjugationModels[col]" ng-change="check(col)" />
                     </td>
                 </tr>
             </tbody>
@@ -33,13 +34,13 @@
     </div>
 </div>
 
-<div ng-repeat="declension in declensions" class="col-lg-12">
+<div ng-repeat="declension in declensions" class="row">
     <h4>{{ declension.name }}</h4>
-    <div ng-repeat="table in declension.tables" class="col-md-3">
+    <div ng-repeat="table in declension.tables" class="col-md-4">
         <table class="table">
             <thead class="thead">
                 <tr>
-                    <th>Case ({{ table.gender }})</th>
+                    <th>{{ table.gender }}</th>
                     <th>Sg.</th>
                     <th>Pl.</th>
                 </tr>

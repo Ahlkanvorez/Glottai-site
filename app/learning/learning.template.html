@@ -1,42 +1,47 @@
-<div class="col-md-8">
-    <div>
-        <h3 id="quizLanguage">{{ stats.language }}</h3>
-        <p id="quizNewWord" ng-if="isNewCard()">New Word</p>
-    </div>
-
-    <div id="quizForm">
-        <form name="quizForm">
-            <button type="button" class="btn btn-lg" id="quizNextButton" ng-click="nextCard()">Next</button>
-            <div id="quizText">
-                <span ng-bind-html="currentCard.sentenceBefore"></span>
-                <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
-                <span ng-bind-html="currentCard.sentenceAfter"></span>
-            </div>
-            <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
-            <p ng-bind-html="currentCard.grammar"></p>
-        </form>
+<div class="row">
+    <div class="col-md-7">
         <div>
-            <button type="button" class="btn" id="translateButton" ng-click="seeTranslation()">See Translation</button>
-            <p id="englishTranslationText"></p>
+            <h3 id="quizLanguage">{{ stats.language }}</h3>
+            <p id="quizNewWord" ng-if="isNewCard()">New Word</p>
+        </div>
+
+        <div id="quizForm">
+            <form name="quizForm">
+                <div id="quizText">
+                    <span ng-bind-html="currentCard.sentenceBefore"></span>
+                    <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required />
+                    <span ng-bind-html="currentCard.sentenceAfter"></span>
+                </div>
+                <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
+                <p ng-bind-html="currentCard.grammar"></p>
+            </form>
+            <div>
+                <button type="button" class="btn" id="translateButton" ng-click="seeTranslation()">See Translation</button>
+                <p id="englishTranslationText"></p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-4" ng-if="learnedWords.length > 0">
-    <h3>Your Vocabulary</h3>
-    <table id="vocabularyProgressTable">
-        <thead>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-lg" id="quizNextButton" ng-click="nextCard()">Next</button>
+    </div>
+
+    <div class="col-md-3 col-md-offset-1" ng-if="learnedWords.length > 0">
+        <h3>Your Vocabulary</h3>
+        <table id="vocabularyProgressTable">
+            <thead>
             <tr>
                 <th>Word</th>
                 <th>Progress</th>
             </tr>
-        </thead>
-        <tbody ng-repeat="word in learnedWords | orderBy:'progress'">
+            </thead>
+            <tbody ng-repeat="word in learnedWords | orderBy:'progress'">
             <tr ng-if="word.seen">
                 <td>{{ word.form }}</td>
                 <td>{{ word.progress }}</td>
             </tr>
-        </tbody>
+            </tbody>
 
-    </table>
+        </table>
+    </div>
 </div>
