@@ -10,11 +10,12 @@
         gulp.src([
             'app/app.module.js',
             'app/app.config.js',
-            'app/about/about.module.js',
             'app/learning/learning.module.js',
-            'app/grammar/grammar.module.js',
             'app/learning/learning.component.js',
+            'app/grammar/grammar.module.js',
+            'app/grammar/grammar.service.js',
             'app/grammar/grammar.component.js',
+            'app/about/about.module.js',
             'app/about/about.component.js'
         ]).pipe(concat('glottai.js'))
             .pipe(babili({ mangle: { keepClassNames: true } }))
