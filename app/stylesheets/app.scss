@@ -91,6 +91,7 @@ html, body {
   background-color: $pewter-blue;
   border: 3px solid $white-smoke;
   border-radius: 0px;
+  margin-top: 75px;
 }
 
 #quizNextButton:hover {
@@ -100,6 +101,7 @@ html, body {
 
 #translateButton {
   @extend #quizNextButton;
+  margin-top: auto;
 }
 
 #englishTranslationText {
