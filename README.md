@@ -3,7 +3,7 @@ Learning dead languages can be particularly difficult, since, with no one to tal
 
 This is the front-end browser-app, written in AngularJS.
 
-To enable the startup script, run the following command:
+To enable the startup script, enter the following command:
 
 > chmod +x startup.sh
 
