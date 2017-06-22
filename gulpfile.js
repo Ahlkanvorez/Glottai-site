@@ -10,6 +10,7 @@
         gulp.src([
             'app/app.module.js',
             'app/app.config.js',
+            'app/app.constants.js',
             'app/learning/learning.module.js',
             'app/learning/learning.component.js',
             'app/learning/learning.stats.service.js',

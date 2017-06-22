@@ -5,7 +5,7 @@
         templateUrl: 'grammar/grammar.template.html',
         controller: ['$scope', 'Grammar',
             function ($scope, Grammar) {
-                Grammar.get(function success (res) {
+                Grammar.get(res => {
                     const tables = res.data;
 
                     $scope.conjugations = [ tables.conjugations.first, tables.conjugations.second ];
@@ -15,16 +15,17 @@
                     $scope.conjugationModels = {};
                     $scope.declensionModels = {};
 
-                    $scope.check = function check (value) {
+                    $scope.check = value => {
                         // If the inputted text is correct, update the styles accordingly.
                         if ($scope.conjugationModels[value] === value) {
                             $scope.conjugationClasses[value] = 'correct';
                         } else {
                             $scope.conjugationClasses[value] = 'incorrect';
                         }
-                    }
-                }, function error () {
+                    };
+                }).catch(err => {
                     console.log('Uh oh ... something bad happened.');
+                    console.log(err);
                 });
             }
         ]
