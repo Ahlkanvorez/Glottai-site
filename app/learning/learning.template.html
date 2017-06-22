@@ -9,8 +9,9 @@
             <form name="quizForm" ng-submit="nextCard()">
                 <div id="quizText">
                     <span ng-bind-html="currentCard.sentenceBefore"></span>
-                    <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''" ng-model="guess" placeholder="{{ answer }}" autofocus required
-                           style="width: {{ (answer.length * 4) }} px" />
+                    <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''"
+                           ng-model="guess" placeholder="{{ answer }}" autofocus required
+                           size="{{ currentCard.answer.length }}" />
                     <span ng-bind-html="currentCard.sentenceAfter"></span>
                 </div>
                 <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
