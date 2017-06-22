@@ -8,8 +8,7 @@
                 Cards.get(res => {
                     const cards = res.data;
 
-                    // Record statistics on user learning progress
-                    // TODO: Send updates to the server.
+                    // Record statistics on user learning progress, and send updates to the server when necessary.
                     Stats.get(res => {
                         $scope.stats = res.data;
 
@@ -23,7 +22,7 @@
                         // seen before, and if they have, the degree to which they've been learned.
                         $scope.learnedWords = [];
 
-                        var updateLearnedWords = function () {
+                        var updateLearnedWords = () => {
                             var words = [];
                             var progress = $scope.stats.progress;
                             for (var id = 0; id < cards.length; ++id) {
@@ -41,7 +40,7 @@
                         // Returns an object indicating how correct the answer is, with two properties:
                         // ['correct'] is true if the given answer is when not considering case, and
                         // ['correct_case'] is true if the given answer is equal when considering case.
-                        var checkAnswer = function (guess, answer) {
+                        var checkAnswer = (guess, answer) => {
                             return {
                                 correct: guess.toUpperCase() === answer.toUpperCase(),
                                 correct_case: guess === answer
@@ -50,7 +49,7 @@
 
                         // Sets $scope.answer, which should be bound to the placeholder of the input box, to the correct answer
                         // for the designated timeout (in milliseconds), before resetting it to the empty string.
-                        var showAnswer = function (delay, answer) {
+                        var showAnswer = (delay, answer) => {
                             $scope.answer = answer;
                             $timeout(function () {
                                 $scope.answer = '';
@@ -58,7 +57,7 @@
                         };
 
                         // Displays the next card from the deck after the given delay.
-                        var showNextCard = function (delay) {
+                        var showNextCard = delay => {
                             $timeout(function () {
                                 $scope.guess = '';
                                 index = (index + 1) % cards.length;
@@ -69,13 +68,13 @@
                         var updateStats = () => {
                             Stats.post($scope.stats, res => {
                                 console.log('Stat update successful: ' + res);
-                            }, (err) => {
+                            }, err => {
                                 console.log('Something broke: ');
                                 console.log(err);
                             });
                         };
 
-                        $scope.nextCard = function () {
+                        $scope.nextCard = () => {
                             var stats = $scope.stats,
                                 id = $scope.currentCard.id,
                                 status = checkAnswer($scope.guess, $scope.currentCard.answer);
@@ -102,22 +101,22 @@
                         };
 
                         // Indicates whether the current card has ever been successfully attempted.
-                        $scope.isNewCard = function () {
+                        $scope.isNewCard = () => {
                             return !$scope.stats.progress[$scope.currentCard.id];
                         };
 
-                        $scope.seeTranslation = function () {
+                        $scope.seeTranslation = () => {
                             var p = document.getElementById('englishTranslationText');
                             p.textContent = $scope.currentCard.translation;
-                            $timeout(function () {
+                            $timeout(() => {
                                 p.textContent = '';
                             }, 3000);
-                        }
-                    }, (err) => {
+                        };
+                    }, err => {
                         console.log('Uh oh ... something went wrong while loading your learning stats: ');
                         console.log(err);
                     });
-                }, (err) => {
+                }, err => {
                     console.log('Uh oh ... something went wrong while grabbing the cards: ');
                     console.log(err);
                 });

@@ -11,15 +11,9 @@
             'app/app.module.js',
             'app/app.config.js',
             'app/app.constants.js',
-            'app/learning/learning.module.js',
-            'app/learning/learning.component.js',
-            'app/learning/learning.stats.service.js',
-            'app/learning/learning.cards.service.js',
-            'app/grammar/grammar.module.js',
-            'app/grammar/grammar.service.js',
-            'app/grammar/grammar.component.js',
-            'app/about/about.module.js',
-            'app/about/about.component.js'
+            'app/**/*.module.js',
+            'app/**/*.component.js',
+            'app/**/*.service.js',
         ]).pipe(concat('glottai.js'))
             .pipe(babili({ mangle: { keepClassNames: true } }))
             .pipe(ngAnnotate())
