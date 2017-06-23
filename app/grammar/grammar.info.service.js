@@ -75,8 +75,21 @@
             return conjugation;
         };
 
+        var getPrincipalParts = (v) => {
+            var conjugation = getConjugation(v);
+
+            // TODO: Return an array [1spria, pai, 1speia, ppp]
+        };
+
+        var getDefinition = (v) => {
+            var firstPrincipalPart = getPrincipalParts(v)[0];
+            return dictionary[firstPrincipalPart];
+        };
+
         return {
             getVerbStem: getVerbStem,
+            getPrincipalParts: getPrincipalParts,
+            getDefinition: getDefinition,
             getConjugation: getConjugation
         };
     };
