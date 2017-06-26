@@ -3,6 +3,7 @@
 
     angular.module('learning', [
         'ngResource', // for $http required in learning.stats.service.js
-        'ngSanitize'
+        'ngSanitize', // for ng-bind-html
+        'grammar' // For the conjugation and declination services.
     ]);
 }());

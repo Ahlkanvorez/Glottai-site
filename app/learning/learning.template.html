@@ -8,11 +8,15 @@
         <div id="quizForm">
             <form name="quizForm" ng-submit="nextCard()">
                 <div id="quizText">
-                    <span ng-bind-html="currentCard.sentenceBefore"></span>
+                    <span ng-repeat="word in currentCard.sentenceBefore.split('[ \t\n]+')">
+                        <span ng-click="wordInfo(word)">{{ word }}</span>
+                    </span>
                     <input name="guess" id="quizInput" type="text" autocomplete="off" ng-readonly="answer !== ''"
                            ng-model="guess" placeholder="{{ answer }}" autofocus required
                            size="{{ currentCard.answer.length }}" />
-                    <span ng-bind-html="currentCard.sentenceAfter"></span>
+                    <span ng-repeat="word in currentCard.sentenceAfter.split('[ \t\n]+')">
+                        <span ng-click="wordInfo(word)">{{ word }}</span>
+                    </span>
                 </div>
                 <p id="quizTextTranslation" ng-bind-html="currentCard.english"></p>
                 <p ng-bind-html="currentCard.grammar"></p>

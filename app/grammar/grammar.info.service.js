@@ -3,10 +3,8 @@
 
     var word = function (form) {
         var s = Object.create(form);
-
-        return {
-            getForm: () => form
-        };
+        s.getForm = () => form;
+        return s;
     };
 
     var noun = function (form, gender, number, grammaticalCase, declension) {
@@ -34,7 +32,7 @@
             var conjugation = Object.create(tables.conjugations[v.getConjugation()]);
 
             const tables = conjugation.tables;
-            for (table in tables) {
+            for (var table in tables) {
                 if (tables.hasOwnProperty(table) && tables.tense === v.getTense() && tables.mood === v.getMood()
                         && tables.voice === v.getVoice()) {
                     // Lookup the current ending for this verb-form using its person, number, tense, mood, & voice.
@@ -57,7 +55,7 @@
             var conjugation = Object.create(tables.conjugations[v.getConjugation()]);
             var stem = getVerbStem(v);
 
-            for (table in tables) {
+            for (var table in tables) {
                 if (tables.hasOwnProperty(table)) {
                     // Map the verb grammar tables so that they show the forms of this verb instead of just endings
                     tables.table.data = tables.table.data.map(row => row.map(ending => {
@@ -77,6 +75,7 @@
 
         var getPrincipalParts = (v) => {
             var conjugation = getConjugation(v);
+            var stem = getVerbStem(v);
 
             // TODO: Return an array [1spria, pai, 1speia, ppp]
         };
@@ -106,4 +105,4 @@
             };
         }
     ]);
-}());
+})();

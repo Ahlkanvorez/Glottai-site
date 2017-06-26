@@ -3,8 +3,8 @@
 
     angular.module('learning').component('learning', {
         templateUrl: '/learning/learning.template.html',
-        controller: ['$sanitize', '$scope', '$timeout', 'Stats', 'Cards',
-            ($sanitize, $scope, $timeout, Stats, Cards) => {
+        controller: ['$sanitize', '$scope', '$timeout', 'Stats', 'Cards', 'Grammar', 'GrammarInfo',
+            ($sanitize, $scope, $timeout, Stats, Cards, Grammar, GrammarInfo) => {
                 Cards.get(res => {
                     const cards = res.data;
 
@@ -112,6 +112,19 @@
                                 p.textContent = '';
                             }, 3000);
                         };
+
+                        Grammar.get(res => {
+                            const tables = res.data;
+
+
+                            $scope.wordInfo = (word) => {
+                                console.log("Info for " + word);
+
+                            };
+                        }, err => {
+                            console.log('Something broke while loading grammar info: ');
+                            console.log(err);
+                        });
                     }, err => {
                         console.log('Uh oh ... something went wrong while loading your learning stats: ');
                         console.log(err);
