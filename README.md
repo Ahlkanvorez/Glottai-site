@@ -10,3 +10,6 @@ To enable the startup script, enter the following command:
 To start the test server, enter the following command:
 
 > ./startup.sh
+
+#### Note:
+The current version assumes a REST-Api available on localhost:3000 with endpoints for all the data needed in the app. That API is not implemented in this Repo.
