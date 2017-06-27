@@ -37,25 +37,33 @@
                 <dd>{{ definition }}</dd>
             </dl>
 
-            <div ng-if="obj.hasOwnProperty('data')" ng-repeat="obj in forms" class="row">
-                <h5>{{ [obj.tense, obj.mood, obj.voice].join(" ") }}</h5>
-                <table class="table">
-                    <thead class="thead">
-                    <tr>
-                        <th>Person</th>
-                        <th>Sg.</th>
-                        <th>Pl.</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="row in obj.data">
-                        <td>{{ row[0] }}</td>
-                        <td ng-repeat="col in row.slice(1)">
-                            {{ col }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div ng-repeat="obj in forms" class="row">
+                <div ng-if="obj.hasOwnProperty('data')">
+                    <h5>{{ [obj.tense, obj.mood, obj.voice].join(" ") }}</h5>
+                    <table class="table">
+                        <thead class="thead">
+                        <tr>
+                            <th>Person</th>
+                            <th>Sg.</th>
+                            <th>Pl.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in obj.data">
+                            <td>{{ row[0] }}</td>
+                            <td ng-repeat="col in row.slice(1)">
+                                {{ col }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="obj.hasOwnProperty('form')">
+                    <dl>
+                        <dt>{{ [obj.tense, obj.voice, obj.mood].join(" ") }}</dt>
+                        <dd>{{ obj.form }}</dd>
+                    </dl>
+                </div>
             </div>
 
             <!-- Button to hide info. -->

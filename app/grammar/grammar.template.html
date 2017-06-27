@@ -12,25 +12,37 @@
 <div ng-repeat="conjugation in conjugations" class="row">
     <h4>{{ conjugation.name }} ({{conjugation.theme}})</h4>
     <div ng-repeat="table in conjugation.tables" class="col-md-4">
-        <h5>{{ [table.tense, table.mood, table.voice].join(" ") }}</h5>
-        <table class="table">
-            <thead class="thead">
-            <tr>
-                <th>Person</th>
-                <th>Sg.</th>
-                <th>Pl.</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="row in table.data">
-                <td>{{ row[0] }}</td>
-                <td ng-repeat="col in row.slice(1)">
-                    <input class="form-control {{ conjugationClasses[col] }}" type="text" placeholder="{{ col }}"
-                           ng-model="conjugationModels[col]" ng-change="check(col)" />
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div ng-if="table.mood === 'Infinitive'">
+            <dl>
+                <dt>{{ [table.tense, table.voice, table.mood].join(" ") }}</dt>
+                <dd>
+                    <input class="form-control {{ conjugationClasses[table.ending] }}" type="text"
+                           placeholder="{{ table.ending}}" ng-model="conjugationModels[table.form]"
+                           ng-change="check(table.ending)" />
+                </dd>
+            </dl>
+        </div>
+        <div ng-if="table.mood !== 'Infinitive'">
+            <h5>{{ [table.tense, table.mood, table.voice].join(" ") }}</h5>
+            <table class="table">
+                <thead class="thead">
+                <tr>
+                    <th>Person</th>
+                    <th>Sg.</th>
+                    <th>Pl.</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in table.data">
+                    <td>{{ row[0] }}</td>
+                    <td ng-repeat="col in row.slice(1)">
+                        <input class="form-control {{ conjugationClasses[col] }}" type="text" placeholder="{{ col }}"
+                               ng-model="conjugationModels[col]" ng-change="check(col)" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
