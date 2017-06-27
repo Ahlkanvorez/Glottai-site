@@ -5,7 +5,7 @@
         templateUrl: 'grammar/grammar.template.html',
         controller: ['$scope', 'Grammar',
             function ($scope, Grammar) {
-                Grammar.get(res => {
+                Grammar('Latin').getTables(res => {
                     const tables = res.data;
 
                     $scope.conjugations = [ tables.conjugations.first, tables.conjugations.second ];
@@ -23,7 +23,7 @@
                             $scope.conjugationClasses[value] = 'incorrect';
                         }
                     };
-                }).catch(err => {
+                }, err => {
                     console.log('Uh oh ... something bad happened.');
                     console.log(err);
                 });

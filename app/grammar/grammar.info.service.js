@@ -1,88 +1,115 @@
 (() => {
     'use strict';
 
-    var word = function (form) {
-        var s = Object.create(form);
+    const word = function (form) {
+        const s = Object.create(String.prototype);
         s.getForm = () => form;
         return s;
     };
 
-    var noun = function (form, gender, number, grammaticalCase, declension) {
-        var w = Object.create(word(form));
-        w.getGender = () => gender;
-        w.getNumber = () => number;
-        w.getCase   = () => grammaticalCase;
-        w.getDeclension = () => declension;
+    const noun = function (raw) {
+        const w = Object.create(word(raw.form));
+        w.getGender = () => raw.gender;
+        w.getNumber = () => raw.number;
+        w.getCase   = () => raw.grammaticalCase;
+        w.getDeclension = () => raw.declension;
         return w;
     };
 
-    var verb = function (form, person, number, tense, mood, voice, conjugation) {
-        var v = Object.create(word(form));
-        v.getPerson = () => person;
-        v.getNumber = () => number;
-        v.getTense  = () => tense;
-        v.getMood   = () => mood;
-        v.getVoice  = () => voice;
-        v.getConjugation = () => conjugation;
+    const verb = function (raw) {
+        const v = Object.create(word(raw.form));
+        v.getPerson = () => raw.person;
+        v.getNumber = () => raw.number;
+        v.getTense  = () => raw.tense;
+        v.getMood   = () => raw.mood;
+        v.getVoice  = () => raw.voice;
+        v.getConjugation = () => raw.conjugation;
         return v;
     };
 
-    var conjugator = function (dictionary, tables) {
-        var getVerbStem = (v) => {
-            var conjugation = Object.create(tables.conjugations[v.getConjugation()]);
-
-            const tables = conjugation.tables;
-            for (var table in tables) {
-                if (tables.hasOwnProperty(table) && tables.tense === v.getTense() && tables.mood === v.getMood()
-                        && tables.voice === v.getVoice()) {
-                    // Lookup the current ending for this verb-form using its person, number, tense, mood, & voice.
-                    var p = v.getPerson() === '1st' ? 0 : (v.getPerson() === '2nd' ? 1 : 2);
-                    var n = v.getNumber() === 'Sg' ? 1 : 2;
-                    // The current ending from the table excludes the '-' prefix in the table.
-                    var currentEnding = tables[p][n].slice(1);
-                    // The stem is the current form minus the ending.
-                    return v.getForm().slice(0, v.getForm().length - currentEnding.length);
+    const conjugator = function (dictionary, grammarTables) {
+        const getVerbStem = rawV => {
+            const v = verb(rawV);
+            if (v.getConjugation().toLowerCase() === 'irregular') {
+                console.log('The conjugation is irregular, and will be supported at a later date.');
+            } else {
+                const tables = grammarTables.conjugations[v.getConjugation().toLowerCase()].tables;
+                for (var i = 0; i < tables.length; ++i) {
+                    if (tables[i].tense === v.getTense() && tables[i].mood === v.getMood()
+                            && tables[i].voice === v.getVoice()) {
+                        const table = tables[i].data;
+                        // Lookup the current ending for this verb-form using its person, number, tense, mood, & voice.
+                        const p = v.getPerson() === '1st' ? 0 : (v.getPerson() === '2nd' ? 1 : 2);
+                        const n = v.getNumber() === 'Sg' ? 0 : 1;
+                        // The current ending from the table excludes the '-' prefix in the table.
+                        const currentEnding = table[p][n].slice(1);
+                        // The stem is the current form minus the ending.
+                        return v.getForm().slice(0, v.getForm().length - currentEnding.length);
+                    }
                 }
             }
             // TODO: Make this a better exception.
             throw {
-                error: 'No Such Conjugation',
+                error: 'NoSuchConjugation',
                 message: 'The given verb (' + v + ') could not be found in the grammar tables.'
             };
         };
 
-        var getConjugation = (v) => {
-            var conjugation = Object.create(tables.conjugations[v.getConjugation()]);
-            var stem = getVerbStem(v);
+        const getConjugation = rawV => {
+            const v = verb(rawV);
+            const tables = grammarTables.conjugations[v.getConjugation().toLowerCase()].tables;
+            const conjugation = [];
+            const stem = getVerbStem(rawV);
 
-            for (var table in tables) {
-                if (tables.hasOwnProperty(table)) {
-                    // Map the verb grammar tables so that they show the forms of this verb instead of just endings
-                    tables.table.data = tables.table.data.map(row => row.map(ending => {
-                        // Only append endings, which are prefixed by '-', not the '1st', '2nd, '3rd' texts.
-                        if (ending.charAt(0) === '-') {
-                            // Remove the '-' prefix in the table endings prior to appending.
-                            return stem + ending.slice(1);
-                        } else {
-                            // Leave the '1st', '2nd', '3rd' text in the table as is for labels.
-                            return ending;
-                        }
-                    }));
+            for (var i = 0; i < tables.length; ++i) {
+                // Map the verb grammar tables so that they show the forms of this verb instead of just endings
+                const appendEnding = ending => {
+                    // Only append endings, which are prefixed by '-', not the '1st', '2nd, '3rd' texts.
+                    if (ending.charAt(0) === '-') {
+                        // Remove the '-' prefix in the table endings prior to appending.
+                        return stem + ending.slice(1);
+                    } else {
+                        // Leave the '1st', '2nd', '3rd' text in the table as is for labels.
+                        return ending;
+                    }
+                };
+                conjugation[i] = {
+                    tense: tables[i].tense,
+                    mood: tables[i].mood,
+                    voice: tables[i].voice
+                };
+
+                // If it has 'data', then it is not an infinitive.
+                if (tables[i].hasOwnProperty('data')) {
+                    conjugation[i].data = tables[i].data.map(row => row.map(appendEnding));
+                } else {
+                    conjugation[i].form = appendEnding(tables[i].ending);
                 }
             }
             return conjugation;
         };
 
-        var getPrincipalParts = (v) => {
-            var conjugation = getConjugation(v);
-            var stem = getVerbStem(v);
+        const getPrincipalParts = v => {
+            const conjugation = getConjugation(v);
+            const stem = getVerbStem(v);
 
-            // TODO: Return an array [1spria, pai, 1speia, ppp]
+            const firstSgPresActInd = conjugation.filter(
+                t => (t.tense === 'Present' && t.voice === 'Active' && t.mood === 'Indicative')
+            )[0].data[0][1]; // data[0][1] is 1st person sg.
+            const presActInf = conjugation.filter(
+                t => (t.tense === 'Present' && t.voice === 'Active' && t.mood === 'Infinitive')
+            )[0].form;
+            const firstSgPerfActInd = conjugation.filter(
+                t => (t.tense === 'Perfect' && t.voice === 'Active' && t.mood === 'Indicative')
+            )[0].data[0][1]; // data[0][1] is 1st person sg.
+            const nomSgNPerfPassPart = stem + '';
+            return [firstSgPresActInd, presActInf, firstSgPerfActInd, nomSgNPerfPassPart];
         };
 
-        var getDefinition = (v) => {
-            var firstPrincipalPart = getPrincipalParts(v)[0];
-            return dictionary[firstPrincipalPart];
+        const getDefinition = v => {
+            const secondPrincipalPart = getPrincipalParts(v)[1];
+            console.log(secondPrincipalPart);
+            return dictionary[secondPrincipalPart];
         };
 
         return {
@@ -96,6 +123,13 @@
     angular.module('grammar').factory('GrammarInfo', [
         () => {
             return (dictionary, tables) => {
+                if (!dictionary || !tables) {
+                    throw {
+                        name: 'InvalidArgumentException',
+                        message: 'Both the dictionary and the grammar tables must be defined.'
+                    };
+                }
+
                 // Encapsulate the dictionary and tables as private members via closure, providing conjugation
                 // and declension capabilities across the whole dictionary and provided grammar tables.
                 return {

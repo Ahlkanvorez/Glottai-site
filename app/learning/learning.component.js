@@ -22,12 +22,13 @@
                         // seen before, and if they have, the degree to which they've been learned.
                         $scope.learnedWords = [];
 
-                        var updateLearnedWords = () => {
-                            var words = [];
-                            var progress = $scope.stats.progress;
+                        const updateLearnedWords = () => {
+                            const words = [];
+                            const progress = $scope.stats.progress;
                             for (var id = 0; id < cards.length; ++id) {
                                 words.push({
-                                    form: cards[id].answer,
+                                    form: cards[id].answer.form,
+                                    word: cards[id].answer,
                                     progress: progress[id] || 0,
                                     seen: (progress[id] || 0) > 0
                                 });
@@ -40,16 +41,21 @@
                         // Returns an object indicating how correct the answer is, with two properties:
                         // ['correct'] is true if the given answer is when not considering case, and
                         // ['correct_case'] is true if the given answer is equal when considering case.
-                        var checkAnswer = (guess, answer) => {
+                        const checkAnswer = (guess, answer) => {
+                            console.log({
+                                guess: guess,
+                                answer: answer
+                            });
                             return {
-                                correct: guess.toUpperCase() === answer.toUpperCase(),
+                                correct: guess.toLocaleLowerCase() === answer.toLocaleLowerCase(),
                                 correct_case: guess === answer
                             };
                         };
 
-                        // Sets $scope.answer, which should be bound to the placeholder of the input box, to the correct answer
-                        // for the designated timeout (in milliseconds), before resetting it to the empty string.
-                        var showAnswer = (delay, answer) => {
+                        // Sets $scope.answer, which should be bound to the placeholder of the input box, to the
+                        // correct answer for the designated timeout (in milliseconds), before resetting it to
+                        // the empty string.
+                        const showAnswer = (delay, answer) => {
                             $scope.answer = answer;
                             $timeout(function () {
                                 $scope.answer = '';
@@ -57,7 +63,7 @@
                         };
 
                         // Displays the next card from the deck after the given delay.
-                        var showNextCard = delay => {
+                        const showNextCard = delay => {
                             $timeout(function () {
                                 $scope.guess = '';
                                 index = (index + 1) % cards.length;
@@ -65,19 +71,19 @@
                             }, delay);
                         };
 
-                        var updateStats = () => {
+                        const updateStats = () => {
                             Stats.post($scope.stats, res => {
                                 console.log('Stat update successful: ' + res);
                             }, err => {
-                                console.log('Something broke: ');
+                                console.log('Something broke while updating stats: ');
                                 console.log(err);
                             });
                         };
 
                         $scope.nextCard = () => {
-                            var stats = $scope.stats,
-                                id = $scope.currentCard.id,
-                                status = checkAnswer($scope.guess, $scope.currentCard.answer);
+                            const stats = $scope.stats;
+                            const id = $scope.currentCard.id;
+                            const status = checkAnswer($scope.guess, $scope.currentCard.answer.form);
                             if (status.correct) {
                                 stats.correct.push({ card: $scope.currentCard });
                                 stats.progress[id] = (stats.progress[id] + 1) || 1;
@@ -86,7 +92,7 @@
                                     $scope.guess = '';
                                     delay = 3000;
                                 }
-                                showAnswer(delay, $scope.currentCard.answer);
+                                showAnswer(delay, $scope.currentCard.answer.form);
                                 showNextCard(delay);
                                 updateLearnedWords();
                             } else {
@@ -95,7 +101,7 @@
                                     answer: $scope.guess
                                 });
                                 $scope.guess = '';
-                                showAnswer(3000, $scope.currentCard.answer);
+                                showAnswer(3000, $scope.currentCard.answer.form);
                             }
                             updateStats();
                         };
@@ -106,21 +112,34 @@
                         };
 
                         $scope.seeTranslation = () => {
-                            var p = document.getElementById('englishTranslationText');
+                            const p = document.getElementById('englishTranslationText');
                             p.textContent = $scope.currentCard.translation;
                             $timeout(() => {
                                 p.textContent = '';
                             }, 3000);
                         };
 
-                        Grammar.get(res => {
+                        const grammar = Grammar('Latin');
+                        grammar.getTables(res => {
                             const tables = res.data;
 
+                            grammar.getWords(res => {
+                                const dictionary = res.data;
 
-                            $scope.wordInfo = (word) => {
-                                console.log("Info for " + word);
+                                const grammarInfo = GrammarInfo(dictionary, tables);
 
-                            };
+                                $scope.wordInfo = (word) => {
+                                    // If word is not an 'object', then it is a non-word (punctuation, etc.), and
+                                    // has no associated information.
+                                    if (typeof word === 'object') {
+                                        const conjugator = grammarInfo.conjugator;
+                                        conjugator.getVerbStem(word);
+                                        conjugator.getPrincipalParts(word);
+                                        console.log(conjugator.getDefinition(word));
+                                        console.log(conjugator.getConjugation(word));
+                                    }
+                                };
+                            });
                         }, err => {
                             console.log('Something broke while loading grammar info: ');
                             console.log(err);
