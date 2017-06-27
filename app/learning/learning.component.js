@@ -133,10 +133,11 @@
                                     // has no associated information.
                                     if (typeof word === 'object') {
                                         const conjugator = grammarInfo.conjugator;
-                                        conjugator.getVerbStem(word);
-                                        conjugator.getPrincipalParts(word);
-                                        console.log(conjugator.getDefinition(word));
-                                        console.log(conjugator.getConjugation(word));
+                                        $scope.showingInfo = true;
+                                        $scope.stem = conjugator.getVerbStem(word);
+                                        $scope.dictionaryEntry = conjugator.getPrincipalParts(word);
+                                        $scope.definition = conjugator.getDefinition(word);
+                                        $scope.forms = conjugator.getConjugation(word);
                                     }
                                 };
                             });

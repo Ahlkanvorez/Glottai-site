@@ -55,6 +55,11 @@
             };
         };
 
+        // Returns an array of objects, each of which contain the associated tables for their indicated tense, mood,
+        // and voice, where the values of each table are the properly conjugated forms of the value rawV.form
+        // Finite forms are provided in tables under 'data', whereas infinite forms are provided as strings under
+        // 'form', for each object in the array. All objects in the array together make up all the forms of a particular
+        // verb, and thus can serve as a paradigm for a verb conjugation.
         const getConjugation = rawV => {
             const v = verb(rawV);
             const tables = grammarTables.conjugations[v.getConjugation().toLowerCase()].tables;
@@ -107,9 +112,8 @@
         };
 
         const getDefinition = v => {
-            const secondPrincipalPart = getPrincipalParts(v)[1];
-            console.log(secondPrincipalPart);
-            return dictionary[secondPrincipalPart];
+            // The definition of verb forms are listed under their second principal part.
+            return dictionary.filter(t => t.form === getPrincipalParts(v)[1])[0].definition;
         };
 
         return {
@@ -119,6 +123,8 @@
             getConjugation: getConjugation
         };
     };
+
+    // TODO: Implement the analogous object to 'conjugator' for declination of nouns and adjectives.
 
     angular.module('grammar').factory('GrammarInfo', [
         () => {

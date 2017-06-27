@@ -15,20 +15,20 @@
         <h5>{{ [table.tense, table.mood, table.voice].join(" ") }}</h5>
         <table class="table">
             <thead class="thead">
-                <tr>
-                    <th>Person</th>
-                    <th>Sg.</th>
-                    <th>Pl.</th>
-                </tr>
+            <tr>
+                <th>Person</th>
+                <th>Sg.</th>
+                <th>Pl.</th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in table.data">
-                    <td>{{ row[0] }}</td>
-                    <td ng-repeat="col in row.slice(1)">
-                        <input class="form-control {{ conjugationClasses[col] }}" type="text" placeholder="{{ col }}"
-                               ng-model="conjugationModels[col]" ng-change="check(col)" />
-                    </td>
-                </tr>
+            <tr ng-repeat="row in table.data">
+                <td>{{ row[0] }}</td>
+                <td ng-repeat="col in row.slice(1)">
+                    <input class="form-control {{ conjugationClasses[col] }}" type="text" placeholder="{{ col }}"
+                           ng-model="conjugationModels[col]" ng-change="check(col)" />
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
