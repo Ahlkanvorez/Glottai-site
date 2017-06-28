@@ -11,7 +11,7 @@
 
 <div ng-repeat="conjugation in conjugations" class="row">
     <h4>{{ conjugation.name }} ({{conjugation.theme}})</h4>
-    <div ng-repeat="table in conjugation.tables" class="col-md-4">
+    <div ng-repeat="table in conjugation.tables" class="{{ table.mood === 'Participle' ? 'col-lg-12' : 'col-md-4' }}">
         <div ng-if="table.mood === 'Infinitive'">
             <dl>
                 <dt>{{ [table.tense, table.voice, table.mood].join(" ") }}</dt>
@@ -22,7 +22,29 @@
                 </dd>
             </dl>
         </div>
-        <div ng-if="table.mood !== 'Infinitive'">
+        <div ng-if="table.mood === 'Participle'">
+            <h5>{{ [table.tense, table.voice, table.mood].join(" ") }}</h5>
+            <div ng-repeat="gender in table.data" class="col-md-4">
+                <table class="table" >
+                    <thead class="thead">
+                    <tr>
+                        <th>{{ gender.gender }}</th>
+                        <th>Sg.</th>
+                        <th>Pl.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in gender.data">
+                        <td>{{ row[0] }}</td>
+                        <td ng-repeat="col in row.slice(1)">
+                            <input class="form-control" type="text" placeholder="{{ col }}" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-if="table.mood !== 'Infinitive' && table.mood !== 'Participle'">
             <h5>{{ [table.tense, table.mood, table.voice].join(" ") }}</h5>
             <table class="table">
                 <thead class="thead">
