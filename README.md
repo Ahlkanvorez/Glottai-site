@@ -13,3 +13,6 @@ To start the test server, enter the following command:
 
 #### Note:
 The current version assumes a REST-Api available on localhost:3000 with endpoints for all the data needed in the app. That API is not implemented in this Repo.
+
+### Note:
+I have switched from AngularJS to ReactJS, and have started a new repository accordingly. Here is a link to the new repo: https://github.com/Ahlkanvorez/Glottai-site-react
